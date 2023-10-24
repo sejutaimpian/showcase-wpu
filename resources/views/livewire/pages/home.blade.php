@@ -9,5 +9,5 @@ title('Showcase WPU');
 ?>
 
 <div>
-    //
+    <x-hero />
 </div>

@@ -20,7 +20,7 @@ class ProjectFactory extends Factory
             'time_id' => fake()->numberBetween(1, 10),
             'name' => fake()->sentence(fake()->numberBetween(1, 3)),
             'about' => fake()->paragraph(),
-            'description' => fake()->paragraph(),
+            'description' => fake()->paragraph(12),
             'demo' => fake()->url(),
             'repo' => 'https://github.com/' . fake()->userName() . '/' . fake()->slug(fake()->numberBetween(1, 3)),
             'app_type_id' => fake()->numberBetween(1, 6),

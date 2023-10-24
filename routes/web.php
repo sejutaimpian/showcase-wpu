@@ -14,7 +14,7 @@ use Livewire\Volt\Volt;
 |
 */
 
-Volt::route('/', 'home')->name('home');
+Volt::route('/', 'pages.home')->name('home');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])

@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ $title }}</title>
-    <link rel="shortcut icon" href="/assets/logo-masjid.png" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('storage/favicon.png') }}" type="image/x-icon">
 
     <!-- Fonts -->
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
@@ -17,8 +17,9 @@
 </head>
 
 <body class="min-h-screen font-sans antialiased">
-    {{--
-    <livewire:pages.guest.navbar /> --}}
+    <header>
+        <livewire:pages.home.navbar />
+    </header>
     <!-- Page Content -->
     <main>
         {{ $slot }}
