@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('name');
             $table->text('about');
             $table->text('description');
-            $table->string('demo');
-            $table->string('repo');
+            $table->string('demo')->nullable();
+            $table->string('repo')->nullable();
             $table->foreignId('app_type_id')->constrained();
             $table->foreignId('developer_id')->constrained();
             $table->timestamps();

@@ -61,14 +61,14 @@ class DatabaseSeeder extends Seeder
             'icon' => 'tech icon/bootstrap.svg'
         ]);
         Tech::create([
-            'name' => 'ExpressJS',
-            'link' => 'https://expressjs.com/',
-            'icon' => 'tech icon/expressjs.svg'
+            'name' => 'Codeigniter',
+            'link' => 'https://codeigniter.com/',
+            'icon' => 'tech icon/codeigniter.svg'
         ]);
         Tech::create([
-            'name' => 'Flutter',
-            'link' => 'https://flutter.dev/',
-            'icon' => 'tech icon/flutter.svg'
+            'name' => 'ExpressJS',
+            'link' => 'https://expressjs.com/',
+            'icon' => 'tech icon/express.svg'
         ]);
         Tech::create([
             'name' => 'Flutter',
@@ -205,15 +205,15 @@ class DatabaseSeeder extends Seeder
         // 11 language
 
         Developer::factory(20)->create();
-        Project::factory(50)->create();
+        Project::factory(100)->create();
 
-        for ($i = 1; $i <= 50; $i++) {
+        for ($i = 1; $i <= 100; $i++) {
             DB::table('project_tech')->insert([
                 'project_id' => $i,
                 'tech_id' => mt_rand(1, 19)
             ]);
         }
-        for ($i = 1; $i <= 50; $i++) {
+        for ($i = 1; $i <= 100; $i++) {
             DB::table('language_project')->insert([
                 'project_id' => $i,
                 'language_id' => mt_rand(1, 11)

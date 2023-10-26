@@ -1,12 +1,10 @@
 <?php
 
-use App\Models\{AppType, Language, Project, Tech, Time};
-use function Livewire\Volt\{computed, layout, mount, on, state, title, updated};
+use App\Models\{AppType, Language, Project, Tech};
+use function Livewire\Volt\{computed, layout, mount, on, state, title};
 
-layout('layouts.home');
+layout('layouts.app');
 title('Showcase WPU');
-
-updated(['filterByTime' => fn () => $this->dispatch('update-filtered-projects')]);
 
 $projects = computed(function(){
     return Project::with(['teches', 'languages', 'appType', 'time'])->get();
@@ -21,9 +19,6 @@ $languages = computed(function(){
 $teches = computed(function(){
     return Tech::all();
 })->persist();
-$time = computed(function(){
-    return Time::all();
-})->persist();
 
 state(['filterByType', 'filterByTeches', 'filterByLanguages',  'filterBySearch','filterByTime', 'dev']);
 
@@ -33,7 +28,6 @@ mount(function(){
     $this->filterByType = 0;
     $this->filterByLanguages = [];
     $this->filterByTeches = [];
-    $this->filterByTime = 0;
 });
 
 on(['update-filtered-projects' => function () {
@@ -66,22 +60,18 @@ on(['update-filtered-projects' => function () {
     })
     ->when(!empty($this->filterBySearch), function($filteredProjects){
         return $filteredProjects->filter(function($filteredProjects){
-            if(str_contains(strtolower($filteredProjects->name), strtolower($this->filterBySearch))){
+            if(str_contains($filteredProjects->name, $this->filterBySearch)){
                 return true;
             } else {
                 return false;
             }
         });
     })
-    ->when(!empty($this->filterByTime), function($filteredProjects){
-        return $filteredProjects->where('time_id', $this->filterByTime);
-    })
     ;
 }]);
 
 $clearFilter = function() {
     $this->filterByType = 0;
-    $this->filterByTime = 0;
     $this->filterByLanguages = [];
     $this->filterByTeches = [];
     $this->filterBySearch = '';
@@ -115,17 +105,13 @@ $setTeches = function($value) {
 $setSearch = function() {
     $this->dispatch('update-filtered-projects');
 };
-$setTime = function() {
-    $this->dispatch('update-filtered-projects');
-};
 
 ?>
 
 <div>
     <x-hero />
-    {{-- Filter Section --}}
+    {{-- Filter --}}
     <section class="container flex flex-col items-center gap-2 px-4 mx-auto mt-16">
-        {{-- Title --}}
         <div class="flex items-center justify-between w-full">
             <h2 class="text-xl font-extrabold lg:text-3xl">Filter</h2>
             <button wire:click="clearFilter"
@@ -133,20 +119,7 @@ $setTime = function() {
                 Clear All
             </button>
         </div>
-        {{-- Filter Action --}}
         <div class="w-full space-y-2">
-            {{-- Filter by Time --}}
-            <div class="flex flex-col md:flex-row md:items-center">
-                <div class="w-24 text-gray-600">Time:</div>
-                <select wire:model.live="filterByTime"
-                class="bg-white caret-cyan-500 flex w-60 px-3 rounded-lg shadow-sm shadow-cyan-200 min-h-[2.25rem] py-0 md:min-h-[2.5rem] border border-gray-300 outline-0 focus:border-cyan-500 focus:ring-cyan-500 placeholder:text-gray-400">
-                    <option value="0" selected>Filter berdasarkan waktu</option>
-                    @foreach ($this->time as $time)
-                    <option value="{{ $time->id }}">{{ $time->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            {{--Filter by AppType --}}
             <div class="flex flex-col md:flex-row md:items-center">
                 <div class="w-24 text-gray-600">App Type:</div>
                 <div class="flex flex-wrap flex-1 gap-x-2 gap-y-1">
@@ -161,7 +134,6 @@ $setTime = function() {
                     @endforeach
                 </div>
             </div>
-            {{--Filter by Languages --}}
             <div class="flex flex-col md:flex-row md:items-center">
                 <div class="w-24 text-gray-600">Language:</div>
                 <div class="flex flex-wrap flex-1 gap-x-2 gap-y-1">
@@ -176,7 +148,6 @@ $setTime = function() {
                     @endforeach
                 </div>
             </div>
-            {{-- Filter by Teches --}}
             <div class="flex flex-col md:flex-row md:items-center">
                 <div class="w-24 text-gray-600">Teches:</div>
                 <div class="flex flex-wrap flex-1 gap-x-2 gap-y-1">
@@ -193,10 +164,9 @@ $setTime = function() {
             </div>
         </div>
     </section>
-    {{-- Projects Section --}}
+    {{-- Projects --}}
     <section class="py-4 mt-4 bg-[#f6fdfd]">
         <div class="container flex flex-col px-4 mx-auto gap-y-2">
-            {{-- Projects Title --}}
             <div class="flex items-center justify-between w-full gap-2">
                 <div class="flex gap-2">
                     <h2 class="text-xl font-extrabold lg:text-3xl">Projects</h2>
@@ -231,7 +201,6 @@ $setTime = function() {
                     </button>
                 </form>
             </div>
-            {{-- Projects List --}}
             <div wire:loading.remove class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 @foreach ($this->projects as $project)
                 <div class="flex flex-col justify-between p-4 bg-white border shadow-lg gap-y-2 rounded-xl">
@@ -279,11 +248,10 @@ $setTime = function() {
                 </div>
                 @endforeach
             </div>
-            {{-- Projects Skeleton --}}
             <div wire:loading>
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                    @for ($i = 1; $i <= 12; $i++)
-                    <div class="flex flex-col justify-between p-4 bg-white border shadow-lg rounded-xl animate-pulse aspect-[3/2]">
+                    @for ($i = 1; $i <= 12; $i++) <div
+                        class="flex flex-col justify-between p-4 bg-white border shadow-lg rounded-xl animate-pulse aspect-[3/2]">
                         <div>
                             <div class="flex items-center justify-between gap-2 mb-3">
                                 <div class="w-10/12 h-7 bg-slate-300"></div>
@@ -301,11 +269,10 @@ $setTime = function() {
                             <div class="w-3/12 h-5 my-1 bg-slate-300"></div>
                             <div class="w-3/12 h-5 my-1 bg-slate-300"></div>
                         </div>
-                    </div>
-                    @endfor
                 </div>
+                @endfor
             </div>
         </div>
-    </section>
-    <livewire:pages.home.footer />
+</div>
+</section>
 </div>
