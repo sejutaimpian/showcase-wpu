@@ -17,6 +17,10 @@ use Livewire\Volt\Volt;
 Volt::route('/', 'pages.home')->name('home');
 Volt::route('/dev', 'pages.dev')->name('dev');
 
+Route::middleware('auth')->prefix('dashboard')->group(function () {
+    Volt::route('/form', 'pages.dashboard.form')->name('form');
+});
+
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');

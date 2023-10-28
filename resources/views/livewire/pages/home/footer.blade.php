@@ -6,7 +6,7 @@ use function Livewire\Volt\{state};
 
 ?>
 
-<footer class="container mx-auto mt-4 bg-gray-800 rounded-lg shadow md:mt-8 md:mb-4">
+<footer class="container relative mx-auto mt-4 bg-gray-800 rounded-lg shadow md:mt-8 md:mb-4">
     <div class="w-full px-6 py-4 mx-auto md:flex md:items-center md:justify-between">
         <span class="text-sm text-gray-100 sm:text-center dark:text-gray-400">© 2023
             <a href="https://github.com/sejutaimpian" class="hover:underline">Eris Sulistina</a>

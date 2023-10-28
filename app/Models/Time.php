@@ -10,6 +10,8 @@ class Time extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'time','description'];
+
     public function projects(): HasMany
     {
         return $this->hasMany(Project::class);

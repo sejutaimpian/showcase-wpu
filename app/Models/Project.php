@@ -11,6 +11,8 @@ class Project extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['time_id', 'name','about','description','demo','repo','app_type_id', 'developer_id'];
+
     public function appType(): BelongsTo
     {
         return $this->belongsTo(AppType::class);
@@ -18,6 +20,10 @@ class Project extends Model
     public function time(): BelongsTo
     {
         return $this->belongsTo(Time::class);
+    }
+    public function developer(): BelongsTo
+    {
+        return $this->belongsTo(Developer::class);
     }
     public function teches(): BelongsToMany
     {
